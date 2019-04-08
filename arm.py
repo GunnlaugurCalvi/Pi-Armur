@@ -34,7 +34,7 @@ Confirm and change this value accordingly from control panel
 Baud Rate = 9600
 """
 
-arduino = Serial('/dev/cu.usbmodem14411', 9600)
+arduino = Serial('COM8', 9600)
 time.sleep(2) # waiting the initialization...
 print("initialised")
 
