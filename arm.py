@@ -34,7 +34,7 @@ Confirm and change this value accordingly from control panel
 Baud Rate = 9600
 """
 
-arduino = Serial('COM8', 9600)
+arduino = Serial('COM9', 9600)
 time.sleep(2) # waiting the initialization...
 print("initialised")
 
@@ -168,7 +168,6 @@ cap.set(3,640)
 cap.set(4,480)
 cap.grab()
 ret, frame = cap.retrieve()
-cv2.namedWindow('armur')
 
 #Run the tracker in infinite loop
 while(1):
@@ -185,8 +184,6 @@ while(1):
 
         #Process the frame and pass data to arduino
         detectAndDisplay(frame)
-
-        cv2.imshow('input',frame)
 
         #press ESC to exit program
         ch = cv2.waitKey(1)
