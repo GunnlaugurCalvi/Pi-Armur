@@ -4,13 +4,23 @@ Yash Chandak    Ankit Dhall
 */
 //Define pin numbers
 
-//right motor
-int m1f = 10; 
-int m1r = 9;
-//left motor
-int m2f = 6; 
-int m2r = 5;
-int led = 13;
+//LA's og skynjarar
+const int LA1_forwards = 6;
+const int LA1_backwards = 7;//assign relay INx pin to arduino pin
+const int LA2_forwards = 4;
+const int LA2_backwards = 5;
+const int trigger_vinstri = 13;
+const int echo_vinstri = 11;
+const int echo_haegri = 12;
+const int trigger_haegri = 10;
+const int feedback_1 = A0; //potentiometer from LA1
+const int feedback_2 = A1; //potentiometer from LA2
+
+// defines variables
+long duration;
+long duration_2; // hægri tímataka
+int distance_haegri;
+int distance_vinstri;
 char value;
 int val[3];
 int len;
@@ -21,12 +31,16 @@ void setup()
 {
   //start serial communication at Baud rate of 9600
   Serial.begin(9600);
-  pinMode(m1f, OUTPUT);
-  pinMode(m1r, OUTPUT);
-  pinMode(m2f, OUTPUT);
-  pinMode(m2r, OUTPUT);
-  pinMode(led, OUTPUT);
-  digitalWrite(led, HIGH);
+pinMode(LA1_forwards, OUTPUT);//set relay as an output
+pinMode(LA1_backwards, OUTPUT);//set relay as an output
+pinMode(LA2_forwards, OUTPUT);//set relay as an output
+pinMode(LA2_backwards, OUTPUT);//set relay as an output
+pinMode(trigger_vinstri, OUTPUT);//setja trigger sem output
+pinMode(trigger_haegri, OUTPUT);//setja trigger sem output
+pinMode(echo_vinstri, INPUT);//setja echo sem input
+pinMode(echo_haegri, INPUT);//setja echo sem input
+pinMode(feedback_1, INPUT);//feedback from actuator1
+pinMode(feedback_2, INPUT);//feedback from actuator2
 }
 
 void execute()
@@ -44,17 +58,7 @@ void execute()
     """
     Direction control Index:
 
-    '<' , '>' are the frame check bits for serial communication
-
-    Numbers represent the direction to be moved as per their       position on numpad
- 
-    2: Back
-    4: Left
-    5: Stay still
-    6: Right
-    8: Forwar
-    """
-  */
+    '<' , '>' are the frame check bits for serial communication*/
 
   switch (no)
   {

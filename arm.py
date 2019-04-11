@@ -61,16 +61,25 @@ def direction(bound, initArea=40000):
     center=(320, 240)
     #current rectangle center
     curr = (bound[0] + bound[2]/2, bound[1]+bound[3]/2)
+    
+    print ("bound 0>", bound[0])
+    print ("bound 1>", bound[1])
+    print ("bound 2>", bound[2])
+    print ("bound 3>", bound[3])
+    print ("curr>", curr)
+    print("magic number -- ", repr(bound[2]*bound[3]))
+    print("fart", bound[2]*bound[3])
+
     out=0
     flag=0
     fb = 0 #0-stay 1-fwd 2-bwd
     lr = 0 #0-stay 1-left 2-right
 
     #if the object is coming closer i.e. it's size is increasing then move bwd
-    if bound[2]*bound[3] > (initArea+5000) or bound[1]<50 :
+    if bound[2]*bound[3] > (80000) or bound[1]<50 :
         fb = 2
     #if the object os moving away i.e. it's size is decreasing then move towards it
-    elif bound[2]*bound[3] < (initArea-5000) or (bound[1]+bound[3])>430 :
+    elif bound[2]*bound[3] < (10000) or (bound[1]+bound[3])>430 :
         fb = 1
     else :
         fb = 0
