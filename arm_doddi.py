@@ -72,14 +72,15 @@ def direction(bound, initArea=40000):
 
     out=0
     flag=0
-    fb = 0 #0-stay 1-fwd 2-bwd
+    fb = 0 #0-stay 1-fwd  2-bwd
     lr = 0 #0-stay 1-left 2-right
+    ud = 0 #0-stay 1-up   2-down
 
     #if the object is coming closer i.e. it's size is increasing then move bwd
-    if bound[2]*bound[3] > (60000) or bound[1]<50 :
+    if bound[2]*bound[3] > (50000):
         fb = 2
     #if the object os moving away i.e. it's size is decreasing then move towards it
-    elif bound[2]*bound[3] < (15000) or (bound[1]+bound[3])>430 :
+    elif bound[2]*bound[3] < (10000):
         fb = 1
     else :
         fb = 0
@@ -93,36 +94,99 @@ def direction(bound, initArea=40000):
     else:
         lr = 0
 
-    if lr == 0 and fb == 0:
-        out = 5
-        print("stay")
-    elif lr == 0 and fb == 1:
-        out =8
-        print("fwd")
-    elif lr == 0 and fb == 2:
-        out = 2
-        print("back")
-    elif lr == 1 and fb == 0:
-        out = 4
-        print("left")
-    elif lr == 1 and fb == 1:
-        out = 7
-        print("fwd left")
-    elif lr == 1 and fb == 2:
+    #move up
+    if bound[1]<50:
+        ud = 1
+    #move down
+    elif (bound[1]+bound[3])>430:
+        ud = 2
+    else:
+        ud = 0
+
+    if lr == 0 and fb == 0 and ud == 0:
         out = 1
-        print("left back")
-    elif lr == 2 and fb == 0:
-        out = 6
-        print("right")
-    elif lr == 2 and fb == 1:
-        out = 9
-        print("fwd right")
-    elif lr == 2 and fb == 2:
+        print("stay")
+    elif lr == 0 and fb == 1 and ud == 0:
+        out =2
+        print("fwd")
+    elif lr == 0 and fb == 2 and ud == 0:
         out = 3
-        print("bwd right")
-    else :
+        print("back")
+    elif lr == 0 and fb == 0 and ud == 1:
+        out = 4
+        print("su")
+    elif lr == 0 and fb == 1 and ud == 1:
         out = 5
-        print("Stay Still")
+        print("slu")
+    elif lr == 0 and fb == 2 and ud == 0:
+        out = 6
+        print("sl")
+    elif lr == 0 and fb == 0 and ud == 0:
+        out = 7
+        print("sld")
+    elif lr == 0 and fb == 1 and ud == 0:
+        out = 8
+        print("sd")
+    elif lr == 0 and fb == 2 and ud == 0:
+        out = 9
+        print("srd")
+    elif lr == 0 and fb == 2 and ud == 0:
+        out = 10
+        print("sr")
+    elif lr == 0 and fb == 1 and ud == 0:
+        out = 11
+        print("sru")
+    elif lr == 0 and fb == 2 and ud == 0:
+        out = 12
+        print("bu")
+    elif lr == 1 and fb == 0 and ud == 0:
+        out = 13
+        print("blu")
+    elif lr == 1 and fb == 1 and ud == 0:
+        out = 14
+        print("bl")
+    elif lr == 1 and fb == 2 and ud == 0:
+        out = 15
+        print("bld")
+    elif lr == 2 and fb == 0 and ud == 0:
+        out = 16
+        print("bd")
+    elif lr == 2 and fb == 1 and ud == 0:
+        out = 17
+        print("brd")
+    elif lr == 2 and fb == 2 and ud == 0:
+        out = 18
+        print("br")
+    elif lr == 2 and fb == 2 and ud == 0:
+        out = 19
+        print("bru")
+    elif lr == 0 and fb == 1 and ud == 0:
+        out = 20
+        print("fu")
+    elif lr == 0 and fb == 2 and ud == 0:
+        out = 21
+        print("flu")
+    elif lr == 1 and fb == 0 and ud == 0:
+        out = 22
+        print("fl")
+    elif lr == 1 and fb == 1 and ud == 0:
+        out = 23
+        print("fld")
+    elif lr == 1 and fb == 2 and ud == 0:
+        out = 24
+        print("fd")
+    elif lr == 2 and fb == 0 and ud == 0:
+        out = 25
+        print("frd")
+    elif lr == 2 and fb == 1 and ud == 0:
+        out = 26
+        print("fr")
+    elif lr == 2 and fb == 2 and ud == 0:
+        out = 27
+        print("fru")     
+    else :
+        out = 28
+        print("BASE")
 
     #Write the encoded direction value on the serial communication line
     print(out)
@@ -160,9 +224,9 @@ def detectAndDisplay(frame):
         direction(RECT)
 
     else:
-        print('Search...')
+        print('No face go to base')
         arduino.write('<'.encode())
-        arduino.write(str(5).encode())
+        arduino.write(str(28).encode())
         arduino.write('>'.encode())
 
     cv2.imshow('frame',frame)
