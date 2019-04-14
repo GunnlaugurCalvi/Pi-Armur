@@ -47,45 +47,49 @@ void execute()
     '<' , '>' are the frame check bits for serial communication
 
     Numbers represent the direction to be moved as per their       position on numpad
- 
+    1: Back Left
     2: Back
+    3: Back right
     4: Left
     5: Stay still
     6: Right
+    7: Front Left
     8: Forward
+    9: Forward right
     """
   */
 
   switch (no)
   {
-    /*Something Weird */
     case 0:
       a = 0; b = 100; c = 100; d = 0;
       break;
-      
-    /*Back*/
+    case 3:
+      a = 0; b = 255; c = 0; d = 100;
+      break;
     case 2:
       a = 0; b = 255; c = 0; d = 255;
       break;
-
-    /*Left*/
+    case 1:
+      a = 0; b = 100; c = 0; d = 255;
+      break;
     case 4:
       a = 255; b = 0; c = 0; d = 0;
       break;
-      
-    /*Still*/
     case 5:
       a = 0; b = 0; c = 0; d = 0;
       break;
-      
-    /*Right*/
     case 6:
       a = 0; b = 0; c = 255; d = 0;
       break;
-      
-    /*Forward*/
+    case 7:
+      a = 255; b = 0; c = 100; d = 0;
+      break;
     case 8:
       a = 150; b = 0; c = 150; d = 0;
+      break;
+    case 9:
+      a = 100; b = 0; c = 255; d = 0;
       break;
   }
  
