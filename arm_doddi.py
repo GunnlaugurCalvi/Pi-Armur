@@ -186,7 +186,7 @@ def direction(bound, initArea=40000):
         print("fru")     
     else :
         out = 28
-        print("BASE")
+        print("base")
 
     #Write the encoded direction value on the serial communication line
     print(out)
@@ -260,7 +260,7 @@ while(1):
 
         #press ESC to exit program
         ch = cv2.waitKey(1)
-        if ch==27:
+        if ch==28:
             break
 
 #Free up memory on exit

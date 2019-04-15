@@ -4,8 +4,12 @@ Yash Chandak    Ankit Dhall
 */
 //Define pin numbers
 
+#include <Servo.h>
+
+Servo myservo;
+
 //LA's og skynjarar
-const int LA1_forwards = 7;
+const int LA1_forwards = 8;
 const int LA1_backwards = 6;//assign relay INx pin to arduino pin
 const int LA2_forwards = 4;
 const int LA2_backwards = 5;
@@ -23,6 +27,9 @@ const int echo_5 = 31;//right
 const int echo_6 = 33;//bottom
 const int feedback_1 = A0; //potentiometer from LA1
 const int feedback_2 = A1; //potentiometer from LA2
+
+//lil servo
+//int pos = -30;
 
 // defines variables
 long duration1;
@@ -42,6 +49,7 @@ int val[3];
 int len;
 int direc;
 
+/*
 void movement() {
   // Clears the trigger_1
   digitalWrite(trigger_1, LOW);
@@ -167,7 +175,7 @@ void movement() {
   Serial.print("Distance_6: ");
   Serial.println(distance_6);
 }
-
+*/
 void setup()
 {
   //start serial communication at Baud rate of 9600
@@ -191,6 +199,8 @@ pinMode(echo_6, INPUT);//setja echo sem input
 pinMode(feedback_1, INPUT);//feedback from actuator1
 pinMode(feedback_2, INPUT);//feedback from actuator2
 
+myservo.attach(49);
+
 digitalWrite(LA1_forwards, HIGH);
 digitalWrite(LA1_backwards, HIGH);
 digitalWrite(LA2_forwards, HIGH);
@@ -198,15 +208,16 @@ digitalWrite(LA2_backwards, HIGH);
 }
 
 void base(){
+  
 //koma LA1 aftast
-  digitalWrite(LA1_forwards, LOW);
-  
-  digitalWrite(LA1_backwards, HIGH);
+    digitalWrite(LA1_forwards, LOW);
+    digitalWrite(LA1_backwards, HIGH);
 //koma LA2 fremst
-  digitalWrite(LA2_forwards, HIGH);
+    digitalWrite(LA2_forwards, HIGH);
+    digitalWrite(LA2_backwards, LOW);
+              // tell servo to go to position in variable 'pos'
   
-  digitalWrite(LA2_backwards, LOW);
-//timi til ad koma ser i base sidan
+
 }
 
 void backLA1(){
@@ -404,22 +415,12 @@ void execute()
       break;
     /*BASE*/
      case 28:
-     // base();
-      //delay(5000);
-      digitalWrite(LA1_forwards, LOW);
-      digitalWrite(LA1_backwards, HIGH);
-      digitalWrite(LA2_forwards, HIGH);
-      digitalWrite(LA2_backwards, LOW);
+      base();
       break;
 
     
   }
  
- /* analogWrite(LA1_forwards, a);
-  analogWrite(LA1_backwards, b);
-  analogWrite(LA2_forwards, c);
-  analogWrite(LA2_backwards, d);
-  //delay(255);*/
 }
 
 void loop()
