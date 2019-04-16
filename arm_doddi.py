@@ -104,94 +104,94 @@ def direction(bound, initArea=40000):
         ud = 0
 
     if lr == 0 and fb == 0 and ud == 0:
-        out = 1
+        out = 'a'
         print("stay")
     elif lr == 0 and fb == 1 and ud == 0:
-        out =2
+        out = 'b'  
         print("fwd")
     elif lr == 0 and fb == 2 and ud == 0:
-        out = 3
+        out = 'c'
         print("back")
     elif lr == 0 and fb == 0 and ud == 1:
-        out = 4
+        out = 'd'
         print("su")
     elif lr == 0 and fb == 1 and ud == 1:
-        out = 5
+        out = 'e'
         print("slu")
     elif lr == 0 and fb == 2 and ud == 0:
-        out = 6
+        out = 'f'
         print("sl")
     elif lr == 0 and fb == 0 and ud == 0:
-        out = 7
+        out = 'g'
         print("sld")
     elif lr == 0 and fb == 1 and ud == 0:
-        out = 8
+        out = 'h'
         print("sd")
     elif lr == 0 and fb == 2 and ud == 0:
-        out = 9
+        out = 'i'
         print("srd")
     elif lr == 0 and fb == 2 and ud == 0:
-        out = 10
+        out = 'j'
         print("sr")
     elif lr == 0 and fb == 1 and ud == 0:
-        out = 11
+        out = 'k'
         print("sru")
     elif lr == 0 and fb == 2 and ud == 0:
-        out = 12
+        out = 'l'
         print("bu")
     elif lr == 1 and fb == 0 and ud == 0:
-        out = 13
+        out = 'm'
         print("blu")
     elif lr == 1 and fb == 1 and ud == 0:
-        out = 14
+        out = 'n'
         print("bl")
     elif lr == 1 and fb == 2 and ud == 0:
-        out = 15
+        out = 'o'
         print("bld")
     elif lr == 2 and fb == 0 and ud == 0:
-        out = 16
+        out = 'p'
         print("bd")
     elif lr == 2 and fb == 1 and ud == 0:
-        out = 17
+        out = 'q'
         print("brd")
     elif lr == 2 and fb == 2 and ud == 0:
-        out = 18
+        out = 'r'
         print("br")
     elif lr == 2 and fb == 2 and ud == 0:
-        out = 19
+        out = 's'
         print("bru")
     elif lr == 0 and fb == 1 and ud == 0:
-        out = 20
+        out = 't'
         print("fu")
     elif lr == 0 and fb == 2 and ud == 0:
-        out = 21
+        out = 'u'
         print("flu")
     elif lr == 1 and fb == 0 and ud == 0:
-        out = 22
+        out = 'v'
         print("fl")
     elif lr == 1 and fb == 1 and ud == 0:
-        out = 23
+        out = 'w'
         print("fld")
     elif lr == 1 and fb == 2 and ud == 0:
-        out = 24
+        out = 'x'
         print("fd")
     elif lr == 2 and fb == 0 and ud == 0:
-        out = 25
+        out = 'y'
         print("frd")
     elif lr == 2 and fb == 1 and ud == 0:
-        out = 26
+        out = 'z'
         print("fr")
     elif lr == 2 and fb == 2 and ud == 0:
-        out = 27
+        out = 'A'
         print("fru")     
     else :
-        out = 28
+        out = 'B'
         print("base")
 
     #Write the encoded direction value on the serial communication line
     print(out)
     arduino.write('<'.encode())
-    arduino.write(str(out).encode())
+    arduino.write(out.encode())
     arduino.write('>'.encode())
 
 def detectAndDisplay(frame):
@@ -225,8 +225,9 @@ def detectAndDisplay(frame):
 
     else:
         print('No face go to base')
+        drasl = 'B'
         arduino.write('<'.encode())
-        arduino.write(str(28).encode())
+        arduino.write(drasl.encode())
         arduino.write('>'.encode())
 
     cv2.imshow('frame',frame)
@@ -260,10 +261,11 @@ while(1):
 
         #press ESC to exit program
         ch = cv2.waitKey(1)
-        if ch==28:
+        if ch==27:
             break
 
 #Free up memory on exit
 cap.release()
 cv2.destroyAllWindows()
 arduino.close()
+    

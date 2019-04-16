@@ -1,12 +1,9 @@
 /*
-         @authors:
-Yash Chandak    Ankit Dhall
+         author:
+Doddi
 */
 //Define pin numbers
 
-#include <Servo.h>
-
-Servo myservo;
 
 //LA's og skynjarar
 const int LA1_forwards = 8;
@@ -27,9 +24,6 @@ const int echo_5 = 31;//right
 const int echo_6 = 33;//bottom
 const int feedback_1 = A0; //potentiometer from LA1
 const int feedback_2 = A1; //potentiometer from LA2
-
-//lil servo
-//int pos = -30;
 
 // defines variables
 long duration1;
@@ -199,28 +193,24 @@ pinMode(echo_6, INPUT);//setja echo sem input
 pinMode(feedback_1, INPUT);//feedback from actuator1
 pinMode(feedback_2, INPUT);//feedback from actuator2
 
-myservo.attach(49);
-
 digitalWrite(LA1_forwards, HIGH);
 digitalWrite(LA1_backwards, HIGH);
 digitalWrite(LA2_forwards, HIGH);
 digitalWrite(LA2_backwards, HIGH);
 }
 
-void base(){
+  void base(){
   
 //koma LA1 aftast
     digitalWrite(LA1_forwards, LOW);
     digitalWrite(LA1_backwards, HIGH);
 //koma LA2 fremst
     digitalWrite(LA2_forwards, HIGH);
-    digitalWrite(LA2_backwards, LOW);
-              // tell servo to go to position in variable 'pos'
-  
+    digitalWrite(LA2_backwards, LOW); 
 
 }
 
-void backLA1(){
+  void backLA1(){
   
     digitalWrite(LA1_forwards, LOW);
 
@@ -264,157 +254,150 @@ void execute()
 
     '<' , '>' are the frame check bits for serial communication*/
 
-  switch (no)
+  switch (value)
   {
-    /*Something Weird */
-    case 0:
-    digitalWrite(LA1_forwards, HIGH);
-    digitalWrite(LA1_backwards, HIGH);
-    digitalWrite(LA2_forwards, HIGH);
-    digitalWrite(LA2_backwards, HIGH);
-      break;
       
     /*stay*/
-    case 1:
+    case 'a':
       digitalWrite(LA1_forwards, HIGH);
     digitalWrite(LA1_backwards, HIGH);
     digitalWrite(LA2_forwards, HIGH);
     digitalWrite(LA2_backwards, HIGH);
       break;
     /*forward*/
-     case 2:
+     case 'b':
       forwardLA1();
       break;
     /*back*/
-     case 3:
+     case 'c':
       backLA1();
       break;
     /*up*/ 
-     case 4:
+     case 'd':
       backLA2();
       break;
     /*left-up*/
-     case 5:
+     case 'e':
       //snua DC motor left
       backLA2();
       break;
     /*left*/ 
-     case 6:
+     case 'f':
       //snua DC motor left
       break;
     /*left-down*/
-     case 7:
+     case 'g':
       //snua DC motor left
-      forwardLA2();
+      forwardLA2();//BREYTING FORWARD A AD VERA HER
       break;
     /*down*/
-     case 8:
-      forwardLA2();
+     case 'h':
+      backLA2();//BREYTING FORWARD A AD VERA HER
       break;
     /*right-down*/
-     case 9:
+     case 'i':
       //snua DC motor right
       forwardLA2();
       break;
     /*right*/
-     case 10:
+     case 'j':
       //snua DC motor right
       break;
     /*right-up*/
-     case 11:
+     case 'k':
       //snua DC motor right
       backLA2();
       break;
     /*back-up*/
-     case 12:
+     case 'l':
       backLA1();
       backLA2();
       break;
     /*back-left-up*/
-     case 13:
+     case 'm':
       backLA1();
       backLA2();
       //snua DC motor left
       break;
     /*back-left*/
-     case 14:
+     case 'n':
       backLA1();
       //snua DC motor left
       break;
     /*back-left-down*/
-     case 15:
+     case 'o':
       backLA1();
       forwardLA2();
       //snua DC motor left
       break;
     /*back-down*/ 
-     case 16:
+     case 'p':
       backLA1();
       forwardLA2();
       break;
     /*back-right-down*/
-     case 17:
+     case 'q':
       backLA1();
       forwardLA2();
       //snua DC motor right
       break;
     /*back-right*/ 
-     case 18:
+     case 'r':
       backLA1();
       //snua DC motor right
       break;
     /*back-right-up*/
-     case 19:
+     case 's':
       backLA1();
       backLA2();
       //snua DC motor right
       break;
     /*forward-up*/
-     case 20:
+     case 't':
       forwardLA1();
       backLA2();
       break;
     /*forward-left-up*/
-     case 21:
+     case 'u':
       forwardLA1();
       backLA2();
       //snua DC motor left
       break;
     /*forward-left*/
-     case 22:
+     case 'v':
       forwardLA1();
       //snua DC motor left
       break;
     /*forward-left-down*/
-     case 23:
+     case 'w':
       forwardLA1();
       forwardLA2();
       //snua DC motor left
       break;
     /*forward-down*/
-     case 24:
+     case 'x':
       forwardLA1();
       forwardLA2();
       break;
     /*forward-right-down*/
-     case 25:
+     case 'y':
       forwardLA1();
       forwardLA2();
       //snua DC motor right
       break;
     /*forward-right*/
-     case 26:
+     case 'z':
       forwardLA1();
       //snua DC motor right
       break;
     /*forward-right-up*/
-     case 27:
+     case 'A':
       forwardLA1();
       backLA2();
       //snua DC motor right
       break;
     /*BASE*/
-     case 28:
+     case 'B':
       base();
       break;
 
