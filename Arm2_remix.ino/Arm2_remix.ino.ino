@@ -6,8 +6,8 @@ Doddi
 
 
 //LA's og skynjarar
-const int LA1_forwards = 8;
-const int LA1_backwards = 6;//assign relay INx pin to arduino pin
+const int LA1_forwards = 6;
+const int LA1_backwards = 7;//assign relay INx pin to arduino pin
 const int LA2_forwards = 4;
 const int LA2_backwards = 5;
 const int trigger_1 = 22;//face left
