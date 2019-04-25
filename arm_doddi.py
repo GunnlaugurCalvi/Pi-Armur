@@ -77,10 +77,10 @@ def direction(bound, initArea=40000):
     ud = 0 #0-stay 1-up   2-down
 
     #if the object is coming closer i.e. it's size is increasing then move bwd
-    if bound[2]*bound[3] > (50000):
+    if bound[2]*bound[3] > (initArea):
         fb = 2
     #if the object os moving away i.e. it's size is decreasing then move towards it
-    elif bound[2]*bound[3] < (10000):
+    elif bound[2]*bound[3] < (20000):
         fb = 1
     else :
         fb = 0

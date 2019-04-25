@@ -1,17 +1,14 @@
 /*
-         author:
-Doddi
+         @authors:
+Yash Chandak    Ankit Dhall
 */
 //Define pin numbers
 
-
 //LA's og skynjarar
-const int LA1_forwards = 3;
-const int LA1_backwards = 2;//assign relay INx pin to arduino pin
-const int LA2_forwards = 5;
-const int LA2_backwards = 4;
-const int DC_haegri = 7;
-const int DC_vinstri = 6;
+const int LA1_forwards = 6;
+const int LA1_backwards = 7;//assign relay INx pin to arduino pin
+const int LA2_forwards = 4;
+const int LA2_backwards = 5;
 const int trigger_1 = 22;//face left
 const int trigger_2 = 24;//face front
 const int trigger_3 = 26;//face right
@@ -45,7 +42,6 @@ int val[3];
 int len;
 int direc;
 
-/*
 void movement() {
   // Clears the trigger_1
   digitalWrite(trigger_1, LOW);
@@ -171,7 +167,7 @@ void movement() {
   Serial.print("Distance_6: ");
   Serial.println(distance_6);
 }
-*/
+
 void setup()
 {
   //start serial communication at Baud rate of 9600
@@ -180,8 +176,6 @@ pinMode(LA1_forwards, OUTPUT);//set relay as an output
 pinMode(LA1_backwards, OUTPUT);//set relay as an output
 pinMode(LA2_forwards, OUTPUT);//set relay as an output
 pinMode(LA2_backwards, OUTPUT);//set relay as an output
-pinMode(DC_haegri, OUTPUT);//set relay as an output
-pinMode(DC_vinstri, OUTPUT);//set relay as an output
 pinMode(trigger_1, OUTPUT);//setja trigger sem output
 pinMode(trigger_2, OUTPUT);//setja trigger sem output
 pinMode(trigger_3, OUTPUT);//setja trigger sem output
@@ -201,25 +195,21 @@ digitalWrite(LA1_forwards, HIGH);
 digitalWrite(LA1_backwards, HIGH);
 digitalWrite(LA2_forwards, HIGH);
 digitalWrite(LA2_backwards, HIGH);
-digitalWrite(DC_haegri, HIGH);
-digitalWrite(DC_vinstri, HIGH);
 }
 
-  void base(){
-  
+void base(){
 //koma LA1 aftast
-    digitalWrite(LA1_forwards, LOW);
-    digitalWrite(LA1_backwards, HIGH);
+  digitalWrite(LA1_forwards, LOW);
+  
+  digitalWrite(LA1_backwards, HIGH);
 //koma LA2 fremst
-    digitalWrite(LA2_forwards, HIGH);
-    digitalWrite(LA2_backwards, LOW);
-// NO TURN
-    digitalWrite(DC_haegri, HIGH);
-    digitalWrite(DC_vinstri, HIGH);
-
+  digitalWrite(LA2_forwards, HIGH);
+  
+  digitalWrite(LA2_backwards, LOW);
+//timi til ad koma ser i base sidan
 }
 
-  void backLA1(){
+void backLA1(){
   
     digitalWrite(LA1_forwards, LOW);
 
@@ -234,12 +224,6 @@ digitalWrite(DC_vinstri, HIGH);
 
   }
 
-  void stayLA1(){
-    digitalWrite(LA2_forwards, HIGH);
-    digitalWrite(LA2_backwards, HIGH);
-    
-  }
-
   void forwardLA2(){
     digitalWrite(LA2_forwards, HIGH);
 
@@ -251,30 +235,6 @@ digitalWrite(DC_vinstri, HIGH);
     digitalWrite(LA2_forwards, LOW);
 
     digitalWrite(LA2_backwards, HIGH);
-    
-  }
-
-  void stayLA2(){
-    digitalWrite(LA2_forwards, HIGH);
-    digitalWrite(LA2_backwards, HIGH);
-    
-  }
-
-  void DChaegri(){
-      digitalWrite(DC_haegri, HIGH);
-      digitalWrite(DC_vinstri, LOW);
-    
-  }
-
-  void DCvinstri(){
-      digitalWrite(DC_haegri, LOW);
-      digitalWrite(DC_vinstri, HIGH);
-    
-  }
-
-  void DCstay(){
-      digitalWrite(DC_haegri, HIGH);
-      digitalWrite(DC_vinstri, HIGH);
     
   }
 
@@ -295,198 +255,172 @@ void execute()
 
   switch (value)
   {
+    /*Something Weird
+    case '0':
+    digitalWrite(LA1_forwards, HIGH);
+    digitalWrite(LA1_backwards, HIGH);
+    digitalWrite(LA2_forwards, HIGH);
+    digitalWrite(LA2_backwards, HIGH);
+      break; 
       
     /*stay*/
-    case 'a':
-      digitalWrite(LA1_forwards, HIGH);
+//    case 1:
+//      digitalWrite(LA1_forwards, HIGH);
+//    digitalWrite(LA1_backwards, HIGH);
+//    digitalWrite(LA2_forwards, HIGH);
+//    digitalWrite(LA2_backwards, HIGH);
+//      break;
+//    /*forward*/
+//     case 2:
+//      forwardLA1();
+//      break;
+//    /*back*/
+//     case 3:
+//      backLA1();
+//      break;
+//    /*up*/ 
+//     case 4:
+//      backLA2();
+//      break;
+//    /*left-up*/
+//     case 5:
+//      //snua DC motor left
+//      backLA2();
+//      break;
+//    /*left*/ 
+//     case 6:
+//      //snua DC motor left
+//      break;
+//    /*left-down*/
+//     case 7:
+//      //snua DC motor left
+//      forwardLA2();
+//      break;
+//    /*down*/
+//     case 8:
+//      forwardLA2();
+//      break;
+//    /*right-down*/
+//     case 9:
+//      //snua DC motor right
+//      forwardLA2();
+//      break;
+//    /*right*/
+//     case 10:
+//      //snua DC motor right
+//      break;
+//    /*right-up*/
+//     case 11:
+//      //snua DC motor right
+//      backLA2();
+//      break;
+//    /*back-up*/
+//     case 12:
+//      backLA1();
+//      backLA2();
+//      break;
+//    /*back-left-up*/
+//     case 13:
+//      backLA1();
+//      backLA2();
+//      //snua DC motor left
+//      break;
+//    /*back-left*/
+//     case 14:
+//      backLA1();
+//      //snua DC motor left
+//      break;
+//    /*back-left-down*/
+//     case 15:
+//      backLA1();
+//      forwardLA2();
+//      //snua DC motor left
+//      break;
+//    /*back-down*/ 
+//     case 16:
+//      backLA1();
+//      forwardLA2();
+//      break;
+//    /*back-right-down*/
+//     case 17:
+//      backLA1();
+//      forwardLA2();
+//      //snua DC motor right
+//      break;
+//    /*back-right*/ 
+//     case 18:
+//      backLA1();
+//      //snua DC motor right
+//      break;
+//    /*back-right-up*/
+//     case 19:
+//      backLA1();
+//      backLA2();
+//      //snua DC motor right
+//      break;
+//    /*forward-up*/
+//     case 20:
+//      forwardLA1();
+//      backLA2();
+//      break;
+//    /*forward-left-up*/
+//     case 21:
+//      forwardLA1();
+//      backLA2();
+//      //snua DC motor left
+//      break;
+//    /*forward-left*/
+//     case 22:
+//      forwardLA1();
+//      //snua DC motor left
+//      break;
+//    /*forward-left-down*/
+//     case 23:
+//      forwardLA1();
+//      forwardLA2();
+//      //snua DC motor left
+//      break;
+//    /*forward-down*/
+//     case 24:
+//      forwardLA1();
+//      forwardLA2();
+//      break;
+//    /*forward-right-down*/
+//     case 25:
+//      forwardLA1();
+//      forwardLA2();
+//      //snua DC motor right
+//      break;
+//    /*forward-right*/
+//     case 26:
+//      forwardLA1();
+//      //snua DC motor right
+//      break;
+//    /*forward-right-up*/
+//     case 27:
+//      forwardLA1();
+//      backLA2();
+//      //snua DC motor right
+//      break;
+//    BASE*/
+
+     case 'a':
+     // base();
+      //delay(5000);
+      digitalWrite(LA1_forwards, LOW);
       digitalWrite(LA1_backwards, HIGH);
       digitalWrite(LA2_forwards, HIGH);
-      digitalWrite(LA2_backwards, HIGH);
-      digitalWrite(DC_haegri, HIGH);
-      digitalWrite(DC_vinstri, HIGH);    
-      break;
-    /*forward*/
-     case 'b':
-      forwardLA1();
-      stayLA2();
-      DCstay();
-      break;
-    /*back*/
-     case 'c':
-      backLA1();
-      stayLA2();
-      DCstay();
-      break;
-    /*up*/ 
-     case 'd':
-      backLA2();
-      stayLA1();
-      DCstay();
-      break;
-    /*left-up*/
-     case 'e':
-      //snua DC motor left
-      DCvinstri();
-      backLA2();
-      stayLA1();
-      break;
-    /*left*/ 
-     case 'f':
-      //snua DC motor left
-      DCvinstri();
-      stayLA1();
-      stayLA2();
-      break;
-    /*left-down*/
-     case 'g':
-      //snua DC motor left
-      DCvinstri();
-      forwardLA2();//BREYTING FORWARD A AD VERA HER
-      stayLA1();
-      break;
-    /*down*/
-     case 'h':
-      forwardLA2();//BREYTING FORWARD A AD VERA HER
-      stayLA1();
-      DCstay();
-      break;
-    /*right-down*/
-     case 'i':
-      //snua DC motor right
-      DChaegri();
-      forwardLA2();
-      stayLA1();
-      break;
-    /*right*/
-     case 'j':
-      //snua DC motor right
-      DChaegri();
-      stayLA1();
-      stayLA2();
-      break;
-    /*right-up*/
-     case 'k':
-      //snua DC motor right
-      DChaegri();
-      backLA2();
-      stayLA1();
-      break;
-    /*back-up*/
-     case 'l':
-      backLA1();
-      backLA2();
-      DCstay();
-      break;
-    /*back-left-up*/
-     case 'm':
-      backLA1();
-      backLA2();
-      //snua DC motor left
-      DCvinstri();
-      break;
-    /*back-left*/
-     case 'n':
-      backLA1();
-      //snua DC motor left
-      DCvinstri();
-      stayLA2();
-      break;
-    /*back-left-down*/
-     case 'o':
-      backLA1();
-      forwardLA2();
-      //snua DC motor left
-      DCvinstri();
-      break;
-    /*back-down*/ 
-     case 'p':
-      backLA1();
-      forwardLA2();
-      DCstay();
-      break;
-    /*back-right-down*/
-     case 'q':
-      backLA1();
-      forwardLA2();
-      //snua DC motor right
-      DChaegri();
-      break;
-    /*back-right*/ 
-     case 'r':
-      backLA1();
-      //snua DC motor right
-      DChaegri();
-      stayLA2();
-      break;
-    /*back-right-up*/
-     case 's':
-      backLA1();
-      backLA2();
-      //snua DC motor right
-      DChaegri();
-      break;
-    /*forward-up*/
-     case 't':
-      forwardLA1();
-      backLA2();
-      DCstay();
-      break;
-    /*forward-left-up*/
-     case 'u':
-      forwardLA1();
-      backLA2();
-      //snua DC motor left
-      DCvinstri();
-      break;
-    /*forward-left*/
-     case 'v':
-      forwardLA1();
-      //snua DC motor left
-      DCvinstri();
-      stayLA2();
-      break;
-    /*forward-left-down*/
-     case 'w':
-      forwardLA1();
-      forwardLA2();
-      //snua DC motor left
-      DCvinstri();
-      break;
-    /*forward-down*/
-     case 'x':
-      forwardLA1();
-      forwardLA2();
-      DCstay();
-      break;
-    /*forward-right-down*/
-     case 'y':
-      forwardLA1();
-      forwardLA2();
-      //snua DC motor right
-      DChaegri();
-      break;
-    /*forward-right*/
-     case 'z':
-      forwardLA1();
-      //snua DC motor right
-      DChaegri();
-      stayLA2();
-      break;
-    /*forward-right-up*/
-     case 'A':
-      forwardLA1();
-      backLA2();
-      //snua DC motor right
-      DChaegri();
-      break;
-    /*BASE*/
-     case 'B':
-      base();
+      digitalWrite(LA2_backwards, LOW);
       break;
 
     
   }
  
+ /* analogWrite(LA1_forwards, a);
+  analogWrite(LA1_backwards, b);
+  analogWrite(LA2_forwards, c);
+  analogWrite(LA2_backwards, d);
+  //delay(255);*/
 }
 
 void loop()
