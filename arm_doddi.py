@@ -106,84 +106,111 @@ def direction(bound, initArea=40000):
     if lr == 0 and fb == 0 and ud == 0:
         out = 'a'
         print("stay")
+
     elif lr == 0 and fb == 1 and ud == 0:
         out = 'b'  
         print("fwd")
+
     elif lr == 0 and fb == 2 and ud == 0:
         out = 'c'
         print("back")
+
     elif lr == 0 and fb == 0 and ud == 1:
         out = 'd'
         print("su")
-    elif lr == 0 and fb == 1 and ud == 1:
+
+    elif lr == 1 and fb == 0 and ud == 1:
         out = 'e'
         print("slu")
-    elif lr == 0 and fb == 2 and ud == 0:
+
+    elif lr == 1 and fb == 0 and ud == 0:
         out = 'f'
         print("sl")
-    elif lr == 0 and fb == 0 and ud == 0:
+
+    elif lr == 1 and fb == 0 and ud == 2:
         out = 'g'
         print("sld")
-    elif lr == 0 and fb == 1 and ud == 0:
+
+    elif lr == 0 and fb == 0 and ud == 2:
         out = 'h'
         print("sd")
-    elif lr == 0 and fb == 2 and ud == 0:
+
+    elif lr == 2 and fb == 0 and ud == 2:
         out = 'i'
         print("srd")
-    elif lr == 0 and fb == 2 and ud == 0:
+
+    elif lr == 2 and fb == 0 and ud == 0:
         out = 'j'
         print("sr")
-    elif lr == 0 and fb == 1 and ud == 0:
+
+    elif lr == 2 and fb == 0 and ud == 1:
         out = 'k'
         print("sru")
-    elif lr == 0 and fb == 2 and ud == 0:
+
+    elif lr == 0 and fb == 2 and ud == 1:
         out = 'l'
         print("bu")
-    elif lr == 1 and fb == 0 and ud == 0:
+
+    elif lr == 1 and fb == 2 and ud == 1:
         out = 'm'
         print("blu")
-    elif lr == 1 and fb == 1 and ud == 0:
+
+    elif lr == 1 and fb == 2 and ud == 0:
         out = 'n'
         print("bl")
-    elif lr == 1 and fb == 2 and ud == 0:
+
+    elif lr == 1 and fb == 2 and ud == 2:
         out = 'o'
         print("bld")
-    elif lr == 2 and fb == 0 and ud == 0:
+
+    elif lr == 0 and fb == 2 and ud == 2:
         out = 'p'
         print("bd")
-    elif lr == 2 and fb == 1 and ud == 0:
+
+    elif lr == 2 and fb == 2 and ud == 2:
         out = 'q'
         print("brd")
+
     elif lr == 2 and fb == 2 and ud == 0:
         out = 'r'
         print("br")
-    elif lr == 2 and fb == 2 and ud == 0:
+
+    elif lr == 2 and fb == 2 and ud == 1:
         out = 's'
         print("bru")
-    elif lr == 0 and fb == 1 and ud == 0:
+
+    elif lr == 0 and fb == 1 and ud == 1:
         out = 't'
         print("fu")
-    elif lr == 0 and fb == 2 and ud == 0:
+
+    elif lr == 1 and fb == 1 and ud == 1:
         out = 'u'
         print("flu")
-    elif lr == 1 and fb == 0 and ud == 0:
+
+    elif lr == 1 and fb == 1 and ud == 0:
         out = 'v'
         print("fl")
-    elif lr == 1 and fb == 1 and ud == 0:
+
+    elif lr == 1 and fb == 1 and ud == 2:
         out = 'w'
         print("fld")
-    elif lr == 1 and fb == 2 and ud == 0:
+
+    elif lr == 0 and fb == 1 and ud == 2:
         out = 'x'
         print("fd")
-    elif lr == 2 and fb == 0 and ud == 0:
+
+    elif lr == 2 and fb == 1 and ud == 2:
         out = 'y'
         print("frd")
+
     elif lr == 2 and fb == 1 and ud == 0:
         out = 'z'
         print("fr")
-    elif lr == 2 and fb == 2 and ud == 0:
+
+    elif lr == 2 and fb == 1 and ud == 1:
         out = 'A'
-        print("fru")     
+        print("fru")  
+
     else :
         out = 'B'
         print("base")
