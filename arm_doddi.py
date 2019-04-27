@@ -62,13 +62,13 @@ def direction(bound, initArea=40000):
     #current rectangle center
     curr = (bound[0] + bound[2]/2, bound[1]+bound[3]/2)
     
-    print ("bound 0>", bound[0])
-    print ("bound 1>", bound[1])
-    print ("bound 2>", bound[2])
-    print ("bound 3>", bound[3])
-    print ("curr>", curr)
-    print("magic number -- ", repr(bound[2]*bound[3]))
-    print("fart", bound[2]*bound[3])
+    # print ("bound 0>", bound[0])
+    # print ("bound 1>", bound[1])
+    # print ("bound 2>", bound[2])
+    # print ("bound 3>", bound[3])
+    # print ("curr>", curr)
+    # print("magic number -- ", repr(bound[2]*bound[3]))
+    # print("fart", bound[2]*bound[3])
 
     out=0
     flag=0
@@ -211,15 +211,18 @@ def direction(bound, initArea=40000):
         out = 'A'
         print("fru")  
 
-    else :
+    else:
         out = 'B'
         print("base")
 
     #Write the encoded direction value on the serial communication line
     print(out)
-    arduino.write('<'.encode())
-    arduino.write(out.encode())
-    arduino.write('>'.encode())
+    clock = time.strftime("%c").split(" ")[3];
+    if int(clock.split(":")[2]) % 2 == 0:
+        print('send to arduino', clock)
+        arduino.write('<'.encode())
+        arduino.write(out.encode())
+        arduino.write('>'.encode())
 
 def detectAndDisplay(frame):
     #use OpenCV HAAR face detetcion algorithm to detect faces
