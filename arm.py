@@ -23,7 +23,6 @@ import time
 PySerial library required for arduino connection
 OpenCV library requierd for face tracking
 """
-
 from serial import Serial
 import cv2
 
@@ -34,7 +33,7 @@ Confirm and change this value accordingly from control panel
 Baud Rate = 9600
 """
 
-arduino = Serial('COM8', 9600)
+arduino = Serial('COM4', 9600)
 time.sleep(2) # waiting the initialization...
 print("initialised")
 
@@ -55,22 +54,31 @@ def direction(bound, initArea=40000):
     7: Front Left
     8: Forward
     9: Forward right
-    """
+    """     
 
     #anchor the centre position of the image
     center=(320, 240)
     #current rectangle center
     curr = (bound[0] + bound[2]/2, bound[1]+bound[3]/2)
+    
+    print ("bound 0>", bound[0])
+    print ("bound 1>", bound[1])
+    print ("bound 2>", bound[2])
+    print ("bound 3>", bound[3])
+    print ("curr>", curr)
+    print("magic number -- ", repr(bound[2]*bound[3]))
+    print("fart", bound[2]*bound[3])
+
     out=0
     flag=0
     fb = 0 #0-stay 1-fwd 2-bwd
     lr = 0 #0-stay 1-left 2-right
 
     #if the object is coming closer i.e. it's size is increasing then move bwd
-    if bound[2]*bound[3] > (initArea+5000) or bound[1]<50 :
+    if bound[2]*bound[3] > (60000) or bound[1]<50 :
         fb = 2
     #if the object os moving away i.e. it's size is decreasing then move towards it
-    elif bound[2]*bound[3] < (initArea-5000) or (bound[1]+bound[3])>430 :
+    elif bound[2]*bound[3] < (15000) or (bound[1]+bound[3])>430 :
         fb = 1
     else :
         fb = 0
@@ -168,7 +176,6 @@ cap.set(3,640)
 cap.set(4,480)
 cap.grab()
 ret, frame = cap.retrieve()
-cv2.namedWindow('armur')
 
 #Run the tracker in infinite loop
 while(1):
@@ -185,8 +192,6 @@ while(1):
 
         #Process the frame and pass data to arduino
         detectAndDisplay(frame)
-
-        cv2.imshow('input',frame)
 
         #press ESC to exit program
         ch = cv2.waitKey(1)
