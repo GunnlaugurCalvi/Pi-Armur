@@ -179,13 +179,13 @@ Servo myservo;
 int servo_degree = 50; //Max degree 75, min degree 0
 
 void ServoUp() {
-  int val = servo_degree - 3;
+  int val = servo_degree - 2;
   myservo.write(val);
   servo_degree = val;
 }
 
 void ServoDown() {
-  int val = servo_degree + 3;
+  int val = servo_degree + 2;
   myservo.write(val);
   servo_degree = val;
 }
