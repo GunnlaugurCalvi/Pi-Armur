@@ -2,8 +2,10 @@
          author:
 Doddi
 */
-//Define pin numbers
 
+#include <Servo.h>
+
+//Define pin numbers 
 
 //LA's og skynjarar
 const int LA1_forwards = 3;
@@ -12,6 +14,7 @@ const int LA2_forwards = 5;
 const int LA2_backwards = 4;
 const int DC_haegri = 7;
 const int DC_vinstri = 6;
+const int Servo_Pin = 8; 
 const int trigger_1 = 22;//face left
 const int trigger_2 = 24;//face front
 const int trigger_3 = 26;//face right
@@ -172,37 +175,53 @@ void movement() {
   Serial.println(distance_6);
 }
 */
+Servo myservo;
+int servo_degree = 50; //Max degree 75, min degree 0
+
+void ServoUp() {
+  int val = servo_degree - 3;
+  myservo.write(val);
+  servo_degree = val;
+}
+
+void ServoDown() {
+  int val = servo_degree + 3;
+  myservo.write(val);
+  servo_degree = val;
+}
 void setup()
 {
   //start serial communication at Baud rate of 9600
   Serial.begin(9600);
-pinMode(LA1_forwards, OUTPUT);//set relay as an output
-pinMode(LA1_backwards, OUTPUT);//set relay as an output
-pinMode(LA2_forwards, OUTPUT);//set relay as an output
-pinMode(LA2_backwards, OUTPUT);//set relay as an output
-pinMode(DC_haegri, OUTPUT);//set relay as an output
-pinMode(DC_vinstri, OUTPUT);//set relay as an output
-pinMode(trigger_1, OUTPUT);//setja trigger sem output
-pinMode(trigger_2, OUTPUT);//setja trigger sem output
-pinMode(trigger_3, OUTPUT);//setja trigger sem output
-pinMode(trigger_4, OUTPUT);//setja trigger sem output
-pinMode(trigger_5, OUTPUT);//setja trigger sem output
-pinMode(trigger_6, OUTPUT);//setja trigger sem output
-pinMode(echo_1, INPUT);//setja echo sem input
-pinMode(echo_2, INPUT);//setja echo sem input
-pinMode(echo_3, INPUT);//setja echo sem input
-pinMode(echo_4, INPUT);//setja echo sem input
-pinMode(echo_5, INPUT);//setja echo sem input
-pinMode(echo_6, INPUT);//setja echo sem input
-pinMode(feedback_1, INPUT);//feedback from actuator1
-pinMode(feedback_2, INPUT);//feedback from actuator2
-
-digitalWrite(LA1_forwards, HIGH);
-digitalWrite(LA1_backwards, HIGH);
-digitalWrite(LA2_forwards, HIGH);
-digitalWrite(LA2_backwards, HIGH);
-digitalWrite(DC_haegri, HIGH);
-digitalWrite(DC_vinstri, HIGH);
+  myservo.attach(Servo_Pin);
+  myservo.write(50);
+  pinMode(LA1_forwards, OUTPUT);//set relay as an output
+  pinMode(LA1_backwards, OUTPUT);//set relay as an output
+  pinMode(LA2_forwards, OUTPUT);//set relay as an output
+  pinMode(LA2_backwards, OUTPUT);//set relay as an output
+  pinMode(DC_haegri, OUTPUT);//set relay as an output
+  pinMode(DC_vinstri, OUTPUT);//set relay as an output
+  pinMode(trigger_1, OUTPUT);//setja trigger sem output
+  pinMode(trigger_2, OUTPUT);//setja trigger sem output
+  pinMode(trigger_3, OUTPUT);//setja trigger sem output
+  pinMode(trigger_4, OUTPUT);//setja trigger sem output
+  pinMode(trigger_5, OUTPUT);//setja trigger sem output
+  pinMode(trigger_6, OUTPUT);//setja trigger sem output
+  pinMode(echo_1, INPUT);//setja echo sem input
+  pinMode(echo_2, INPUT);//setja echo sem input
+  pinMode(echo_3, INPUT);//setja echo sem input
+  pinMode(echo_4, INPUT);//setja echo sem input
+  pinMode(echo_5, INPUT);//setja echo sem input
+  pinMode(echo_6, INPUT);//setja echo sem input
+  pinMode(feedback_1, INPUT);//feedback from actuator1
+  pinMode(feedback_2, INPUT);//feedback from actuator2
+  
+  digitalWrite(LA1_forwards, HIGH);
+  digitalWrite(LA1_backwards, HIGH);
+  digitalWrite(LA2_forwards, HIGH);
+  digitalWrite(LA2_backwards, HIGH);
+  digitalWrite(DC_haegri, HIGH);
+  digitalWrite(DC_vinstri, HIGH);
 }
 
   void base(){
@@ -216,7 +235,6 @@ digitalWrite(DC_vinstri, HIGH);
 // NO TURN
     digitalWrite(DC_haegri, HIGH);
     digitalWrite(DC_vinstri, HIGH);
-
 }
 
   void backLA1(){
@@ -277,16 +295,14 @@ digitalWrite(DC_vinstri, HIGH);
       digitalWrite(DC_vinstri, HIGH);
     
   }
-
+    
 void execute()
 {
   int no;
   int i = 0;
-
   //convert ASCII value from serial buffer into int
   no = value - '0';
   //Serial.println(no);
-
   /*
     """
     Direction control Index:
@@ -295,7 +311,6 @@ void execute()
 
   switch (value)
   {
-      
     /*stay*/
     case 'a':
       digitalWrite(LA1_forwards, HIGH);
@@ -303,12 +318,12 @@ void execute()
       digitalWrite(LA2_forwards, HIGH);
       digitalWrite(LA2_backwards, HIGH);
       digitalWrite(DC_haegri, HIGH);
-      digitalWrite(DC_vinstri, HIGH);    
+      digitalWrite(DC_vinstri, HIGH);
       break;
     /*forward*/
      case 'b':
       forwardLA1();
-      stayLA2();
+      backLA2();
       DCstay();
       break;
     /*back*/
@@ -320,6 +335,10 @@ void execute()
     /*up*/ 
      case 'd':
       backLA2();
+      if (servo_degree >= 0 && servo_degree <= 75)
+      {
+        ServoUp();
+      }
       stayLA1();
       DCstay();
       break;
@@ -402,6 +421,10 @@ void execute()
      case 'p':
       backLA1();
       forwardLA2();
+      if (servo_degree >= 0 && servo_degree <= 75)
+      {
+        ServoUp();
+      }
       DCstay();
       break;
     /*back-right-down*/
@@ -427,6 +450,10 @@ void execute()
       break;
     /*forward-up*/
      case 't':
+      if (servo_degree >= 0 && servo_degree <= 75)
+      {
+        ServoUp();
+      }
       forwardLA1();
       backLA2();
       DCstay();
@@ -456,6 +483,10 @@ void execute()
      case 'x':
       forwardLA1();
       forwardLA2();
+      if (servo_degree >= 0 && servo_degree <= 75)
+      {
+        ServoDown();
+      }
       DCstay();
       break;
     /*forward-right-down*/
@@ -483,12 +514,10 @@ void execute()
      case 'B':
       base();
       break;
-
-    
   }
  
 }
-
+ 
 void loop()
 {
   if (Serial.available())
