@@ -48,14 +48,15 @@ int val[3];
 int len;
 int direc;
 
-int MIN_DISTANCE = 5;
+int MIN_DISTANCE = 20;
 
 //test
 int tala1;
 int tala2;
 int looper = 0;
 
-int movement() {
+
+int bottomSensor() {
   // Clears the trigger_1
   digitalWrite(trigger_1, LOW);
   delayMicroseconds(2);
@@ -73,8 +74,11 @@ int movement() {
   
   // Prints the distance on the Serial Monitor
   Serial.println(distance_1);
- 
-//*******************************************************
+
+  return distance_1;
+}
+
+int frontSensorCenter () {
   // Clears the trigger_2
   digitalWrite(trigger_2, LOW);
   delayMicroseconds(2);
@@ -94,9 +98,10 @@ int movement() {
   Serial.println(distance_2);
 
   return distance_2;
-/*
-//**********************************************
+}
 
+
+int sideSensorLeft() {
   // Clears the trigger_3
   digitalWrite(trigger_3, LOW);
   delayMicroseconds(2);
@@ -116,8 +121,9 @@ int movement() {
   Serial.println(distance_3);
 
   return distance_3;
-//**********************************************
+}
 
+int frontSensorLeft() {
   // Clears the trigger_4
   digitalWrite(trigger_4, LOW);
   delayMicroseconds(2);
@@ -137,9 +143,9 @@ int movement() {
   Serial.println(distance_4);
 
   return distance_4;
+}
 
-//**********************************************
-
+int frontSensorRight() {
   // Clears the trigger_5
   digitalWrite(trigger_5, LOW);
   delayMicroseconds(2);
@@ -159,9 +165,9 @@ int movement() {
   Serial.println(distance_5);
 
   return distance_5;
+}
 
-//**********************************************
-
+int sideSensorRight() {
   // Clears the trigger_6
   digitalWrite(trigger_6, LOW);
   delayMicroseconds(2);
@@ -181,8 +187,6 @@ int movement() {
   Serial.println(distance_6);
 
   return distance_6;
-
-  */
 }
 
 Servo myservo;
@@ -338,11 +342,32 @@ void execute()
     base();
   }
   //calculate distances
-  if (movement() < 20)
+  if (bottomSensor() < MIN_DISTANCE)
   {
     digitalWrite(LA1_forwards, LOW);
     digitalWrite(LA1_backwards, HIGH);
   }
+  else if(sideSensorLeft() < MIN_DISTANCE) {
+    digitalWrite(LA1_forwards, LOW);
+    digitalWrite(LA1_backwards, HIGH); 
+  }
+  else if(frontSensorLeft() < MIN_DISTANCE) {
+    digitalWrite(LA1_forwards, LOW);
+    digitalWrite(LA1_backwards, HIGH); 
+  }
+  
+ /* else if(sideSensorRight() < MIN_DISTANCE) {
+    digitalWrite(LA1_forwards, LOW);
+    digitalWrite(LA1_backwards, HIGH); 
+  }
+  else if(frontSensorRight() < MIN_DISTANCE) {
+    digitalWrite(LA1_forwards, LOW);
+    digitalWrite(LA1_backwards, HIGH); 
+  }
+  else if(frontSensorCenter() < MIN_DISTANCE) {
+    digitalWrite(LA1_forwards, LOW);
+    digitalWrite(LA1_backwards, HIGH); 
+  }*/
   else
   {  
     switch (value)
