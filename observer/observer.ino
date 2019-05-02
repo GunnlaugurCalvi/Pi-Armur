@@ -29,6 +29,8 @@ const int echo_5 = 31;//right
 const int echo_6 = 33;//bottom
 const int feedback_1 = A0; //potentiometer from LA1
 const int feedback_2 = A1; //potentiometer from LA2
+int LA1_current_position = 0;
+int LA2_current_position = 0;
 
 // defines variables
 long duration1;
@@ -51,8 +53,8 @@ int direc;
 int MIN_DISTANCE = 20;
 
 //test
-int tala1;
-int tala2;
+int minServoDegree;
+int maxServoDegree;
 int looper = 0;
 
 int dcRotationStatus = 0;
@@ -175,16 +177,21 @@ Servo myservo;
 int servo_degree = 50; //Max degree 75, min degree 0
 
 void ServoUp() {
-  int val = servo_degree - 2;
-  myservo.write(val);
-  servo_degree = val;
+  if (servo_degree >= minServoDegree) {
+    int val = servo_degree - 2;
+    myservo.write(val);
+    servo_degree = val;
+  }
 }
 
 void ServoDown() {
-  int val = servo_degree + 2;
-  myservo.write(val);
-  servo_degree = val;
+  if (servo_degree <= maxServoDegree) {
+    int val = servo_degree + 2;
+    myservo.write(val);
+    servo_degree = val;
+  }
 }
+
 void setup()
 {
   //start serial communication at Baud rate of 9600
@@ -222,22 +229,24 @@ void setup()
 
 void base(){
   
-//koma LA1 aftast
+    //koma LA1 aftast
     digitalWrite(LA1_forwards, LOW);
     digitalWrite(LA1_backwards, HIGH);
-//koma LA2 fremst
+    //koma LA2 fremst
     digitalWrite(LA2_forwards, HIGH);
     digitalWrite(LA2_backwards, LOW);
-// NO TURN
+    // NO TURN
     digitalWrite(DC_haegri, HIGH);
     digitalWrite(DC_vinstri, HIGH);
-// LEVEL FACE
-    if (servo_degree >= 55){
+     // LEVEL FACE
+    if(LA1_current_position < 200 && LA2_current_position > 850) {
+      if (servo_degree >= 55 ){
         ServoUp();
       }
-    if (servo_degree <= 50){
+      else {
         ServoDown();
       }
+    }
 }
 
   void backLA1(){
@@ -321,9 +330,12 @@ void execute()
 
     '<' , '>' are the frame check bits for serial communication*/
 
-  tala1 = 40; //feedback_1/12;
-  tala2 = 70;//feedback_2/10;
-  if(feedback_1 >= 930 && feedback_2 >= 800)
+  LA1_current_position = analogRead(feedback_1);
+  LA2_current_position = analogRead(feedback_2);
+
+  minServoDegree = 40; //feedback_1/12;
+  maxServoDegree = 70;//feedback_2/10;
+  if(LA1_current_position >= 930 && LA2_current_position >= 800)
   {
     base();
   }
@@ -361,10 +373,7 @@ void execute()
       /*up*/ 
        case 'd':
         stayLA2();//var backLA2
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         stayLA1();
         DCstay();
         break;
@@ -387,19 +396,13 @@ void execute()
         //snua DC motor left
         DCvinstri();
         forwardLA2();//BREYTING FORWARD A AD VERA HER
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoDown();
-        }
+        ServoDown();
         stayLA1();
         break;
       /*down*/
        case 'h':
         stayLA2();//BREYTING FORWARD A AD VERA HER
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoDown();
-        }
+        ServoDown();
         stayLA1();
         DCstay();
         break;
@@ -408,10 +411,7 @@ void execute()
         //snua DC motor right
         DChaegri();
         forwardLA2();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoDown();
-        }
+        ServoDown();
         stayLA1();
         break;
       /*right*/
@@ -426,20 +426,14 @@ void execute()
         //snua DC motor right
         DChaegri();
         backLA2();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         stayLA1();
         break;
       /*back-up*/
        case 'l':
         backLA1();
         backLA2();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         DCstay();
         break;
       /*back-left-up*/
@@ -448,10 +442,7 @@ void execute()
         backLA2();
         //snua DC motor left
         DCvinstri();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         break;
       /*back-left*/
        case 'n':
@@ -471,10 +462,7 @@ void execute()
        case 'p':
         backLA1();
         forwardLA2();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoDown();
-        }
+        ServoDown();
         DCstay();
         break;
       /*back-right-down*/
@@ -483,10 +471,7 @@ void execute()
         forwardLA2();
         //snua DC motor right
         DChaegri();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoDown();
-        }
+        ServoDown();
         break;
       /*back-right*/ 
        case 'r':
@@ -501,17 +486,11 @@ void execute()
         backLA2();
         //snua DC motor right
         DChaegri();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         break;
       /*forward-up*/
        case 't':
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         forwardLA1();
         backLA2();
         DCstay();
@@ -522,10 +501,7 @@ void execute()
         backLA2();
         //snua DC motor left
         DCvinstri();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         break;
       /*forward-left*/
        case 'v':
@@ -545,10 +521,7 @@ void execute()
        case 'x':
         forwardLA1();
         forwardLA2();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoDown();
-        }
+        ServoDown();
         DCstay();
         break;
       /*forward-right-down*/
@@ -557,10 +530,7 @@ void execute()
         forwardLA2();
         //snua DC motor right
         DChaegri();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoDown();
-        }
+        ServoDown();
         break;
       /*forward-right*/
        case 'z':
@@ -575,10 +545,7 @@ void execute()
         backLA2();
         //snua DC motor right
         DChaegri();
-        if (servo_degree >= tala1 && servo_degree <= tala2)
-        {
-          ServoUp();
-        }
+        ServoUp();
         break;
       /*BASE*/
        case 'B':
