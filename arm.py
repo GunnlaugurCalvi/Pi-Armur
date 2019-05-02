@@ -18,6 +18,7 @@ convert frame specific values to percentages
 import numpy as np
 import sys
 import time
+import datetime
 
 """
 PySerial library required for arduino connection
@@ -276,9 +277,13 @@ cap.set(4,480)
 while True:
     frames += 1;
 
-    #grab the frames from web camera
-
-    cap.grab()
+    now = datetime.datetime.now();
+    sleep = datetime.datetime.now().replace(hour = 17, minute = 0, second = 0)
+    wakeUp = datetime.datetime.now().replace(hour = 10, minute = 0, second = 0)
+    # robot should be awake between 10 and 17
+    if((now < sleep) or (now > wakeUp)):
+        #grab the frames from web camera
+        cap.grab()
     ret, frame = cap.retrieve()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 

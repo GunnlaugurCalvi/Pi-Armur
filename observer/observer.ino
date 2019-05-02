@@ -243,7 +243,7 @@ void base(){
       if (servo_degree >= 55 ){
         ServoUp();
       }
-      else {
+      else if(servo_degree < 53) {
         ServoDown();
       }
     }
