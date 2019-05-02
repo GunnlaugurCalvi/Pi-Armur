@@ -55,6 +55,7 @@ int tala1;
 int tala2;
 int looper = 0;
 
+int dcRotationStatus = 0;
 
 int bottomSensor() {
   // Clears the trigger_1
@@ -71,9 +72,6 @@ int bottomSensor() {
   
   // Calculating the distance
   distance_1= duration1*0.034/2;
-  
-  // Prints the distance on the Serial Monitor
-  Serial.println(distance_1);
 
   return distance_1;
 }
@@ -94,12 +92,8 @@ int frontSensorCenter () {
   // Calculating the distance
   distance_2= duration2*0.034/2;
   
-  // Prints the distance on the Serial Monitor
-  Serial.println(distance_2);
-
   return distance_2;
 }
-
 
 int sideSensorLeft() {
   // Clears the trigger_3
@@ -117,9 +111,6 @@ int sideSensorLeft() {
   // Calculating the distance
   distance_3= duration3*0.034/2;
   
-  // Prints the distance on the Serial Monitor
-  Serial.println(distance_3);
-
   return distance_3;
 }
 
@@ -139,9 +130,6 @@ int frontSensorLeft() {
   // Calculating the distance
   distance_4= duration4*0.034/2;
   
-  // Prints the distance on the Serial Monitor
-  Serial.println(distance_4);
-
   return distance_4;
 }
 
@@ -160,9 +148,6 @@ int frontSensorRight() {
   
   // Calculating the distance
   distance_5= duration5*0.034/2;
-  
-  // Prints the distance on the Serial Monitor
-  Serial.println(distance_5);
 
   return distance_5;
 }
@@ -183,9 +168,6 @@ int sideSensorRight() {
   // Calculating the distance
   distance_6= duration6*0.034/2;
   
-  // Prints the distance on the Serial Monitor
-  Serial.println(distance_6);
-
   return distance_6;
 }
 
@@ -300,15 +282,19 @@ void base(){
   }
 
   void DChaegri(){
-      digitalWrite(DC_haegri, HIGH);
-      digitalWrite(DC_vinstri, LOW);
-    
+      if (dcRotationStatus <= 150) {
+        dcRotationStatus =  dcRotationStatus + 1;
+        digitalWrite(DC_haegri, HIGH);
+        digitalWrite(DC_vinstri, LOW);
+      }
   }
 
   void DCvinstri(){
-      digitalWrite(DC_haegri, LOW);
-      digitalWrite(DC_vinstri, HIGH);
-    
+     if (dcRotationStatus >= -150) {
+        dcRotationStatus =  dcRotationStatus - 1;
+        digitalWrite(DC_haegri, LOW);
+        digitalWrite(DC_vinstri, HIGH);
+     }
   }
 
   void DCstay(){
@@ -347,27 +333,6 @@ void execute()
     digitalWrite(LA1_forwards, LOW);
     digitalWrite(LA1_backwards, HIGH);
   }
-  else if(sideSensorLeft() < MIN_DISTANCE) {
-    digitalWrite(LA1_forwards, LOW);
-    digitalWrite(LA1_backwards, HIGH); 
-  }
-  else if(frontSensorLeft() < MIN_DISTANCE) {
-    digitalWrite(LA1_forwards, LOW);
-    digitalWrite(LA1_backwards, HIGH); 
-  }
-  
- /* else if(sideSensorRight() < MIN_DISTANCE) {
-    digitalWrite(LA1_forwards, LOW);
-    digitalWrite(LA1_backwards, HIGH); 
-  }
-  else if(frontSensorRight() < MIN_DISTANCE) {
-    digitalWrite(LA1_forwards, LOW);
-    digitalWrite(LA1_backwards, HIGH); 
-  }
-  else if(frontSensorCenter() < MIN_DISTANCE) {
-    digitalWrite(LA1_forwards, LOW);
-    digitalWrite(LA1_backwards, HIGH); 
-  }*/
   else
   {  
     switch (value)
