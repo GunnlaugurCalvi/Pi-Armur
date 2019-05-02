@@ -57,7 +57,7 @@ int looper = 0;
 
 int movement() {
 
-  /*
+/*
   // Clears the trigger_1
   digitalWrite(trigger_1, LOW);
   delayMicroseconds(2);
@@ -75,7 +75,9 @@ int movement() {
   
   // Prints the distance on the Serial Monitor
   Serial.println(distance_1);
- */
+ 
+
+ 
 //*******************************************************
   // Clears the trigger_2
   digitalWrite(trigger_2, LOW);
@@ -87,95 +89,104 @@ int movement() {
   digitalWrite(trigger_2, LOW);
   
   // Reads the echo_1, returns the sound wave travel time in microseconds
-  duration1 = pulseIn(echo_2, HIGH);
+  duration2 = pulseIn(echo_2, HIGH);
   
   // Calculating the distance
-  distance_1= duration1*0.034/2;
+  distance_2= duration2*0.034/2;
   
   // Prints the distance on the Serial Monitor
   Serial.println(distance_2);
 
-
   return distance_2;
 
-/*
 //**********************************************
 
   // Clears the trigger_3
   digitalWrite(trigger_3, LOW);
+  delayMicroseconds(2);
   
   // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(trigger_3, HIGH);
+  delayMicroseconds(10);
   digitalWrite(trigger_3, LOW);
   
-  // Reads the echo_3, returns the sound wave travel time in microseconds
+  // Reads the echo_1, returns the sound wave travel time in microseconds
   duration3 = pulseIn(echo_3, HIGH);
   
   // Calculating the distance
   distance_3= duration3*0.034/2;
   
   // Prints the distance on the Serial Monitor
-  Serial.print("Distance_3: ");
   Serial.println(distance_3);
-  
+
+  return distance_3;
 //**********************************************
 
-/*
   // Clears the trigger_4
   digitalWrite(trigger_4, LOW);
+  delayMicroseconds(2);
   
   // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(trigger_4, HIGH);
+  delayMicroseconds(10);
   digitalWrite(trigger_4, LOW);
   
-  // Reads the echo_4, returns the sound wave travel time in microseconds
+  // Reads the echo_1, returns the sound wave travel time in microseconds
   duration4 = pulseIn(echo_4, HIGH);
   
   // Calculating the distance
   distance_4= duration4*0.034/2;
   
   // Prints the distance on the Serial Monitor
-  Serial.print("Distance_4: ");
   Serial.println(distance_4);
-  
+
+  return distance_4;
+
 //**********************************************
 
   // Clears the trigger_5
   digitalWrite(trigger_5, LOW);
+  delayMicroseconds(2);
   
   // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(trigger_5, HIGH);
+  delayMicroseconds(10);
   digitalWrite(trigger_5, LOW);
   
-  // Reads the echo_5, returns the sound wave travel time in microseconds
+  // Reads the echo_1, returns the sound wave travel time in microseconds
   duration5 = pulseIn(echo_5, HIGH);
   
   // Calculating the distance
   distance_5= duration5*0.034/2;
   
   // Prints the distance on the Serial Monitor
-  Serial.print("Distance_5: ");
   Serial.println(distance_5);
+
+  return distance_5;
 
 //**********************************************
 
+*/
+
   // Clears the trigger_6
   digitalWrite(trigger_6, LOW);
+  delayMicroseconds(2);
   
   // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(trigger_6, HIGH);
+  delayMicroseconds(10);
   digitalWrite(trigger_6, LOW);
   
-  // Reads the echo_6, returns the sound wave travel time in microseconds
+  // Reads the echo_1, returns the sound wave travel time in microseconds
   duration6 = pulseIn(echo_6, HIGH);
   
   // Calculating the distance
   distance_6= duration6*0.034/2;
   
   // Prints the distance on the Serial Monitor
-  Serial.print("Distance_6: ");
   Serial.println(distance_6);
-  */
+
+  return distance_6;
 }
 
 Servo myservo;
