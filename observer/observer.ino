@@ -56,8 +56,6 @@ int tala2;
 int looper = 0;
 
 int movement() {
-
-/*
   // Clears the trigger_1
   digitalWrite(trigger_1, LOW);
   delayMicroseconds(2);
@@ -75,8 +73,6 @@ int movement() {
   
   // Prints the distance on the Serial Monitor
   Serial.println(distance_1);
- 
-
  
 //*******************************************************
   // Clears the trigger_2
@@ -98,7 +94,7 @@ int movement() {
   Serial.println(distance_2);
 
   return distance_2;
-
+/*
 //**********************************************
 
   // Clears the trigger_3
@@ -166,8 +162,6 @@ int movement() {
 
 //**********************************************
 
-*/
-
   // Clears the trigger_6
   digitalWrite(trigger_6, LOW);
   delayMicroseconds(2);
@@ -187,6 +181,8 @@ int movement() {
   Serial.println(distance_6);
 
   return distance_6;
+
+  */
 }
 
 Servo myservo;
