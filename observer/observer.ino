@@ -340,10 +340,12 @@ void execute()
     base();
   }
   //calculate distances
-  if (bottomSensor() < MIN_DISTANCE)
-  {
-    digitalWrite(LA1_forwards, LOW);
-    digitalWrite(LA1_backwards, HIGH);
+  if (leftSideSensor() < MIN_DISTANCE && rightSideSensor() < MIN_DISTANCE) {
+    DCstay();
+  } else if (leftSideSensor() < MIN_DISTANCE){
+    DChaegri();
+  } else if (rightSideSensor() < MIN_DISTANCE){
+    DCvinstri();
   }
   else
   {  
